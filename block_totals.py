@@ -12,8 +12,10 @@ connection = psycopg2.connect(
 connection.autocommit = True
 cursor = connection.cursor()
 
-start_block = 12965000
-end_block = 14714999
+#start_block = 12965000
+#end_block = 14714999
+start_block = 14715000
+end_block = 15449617
 num_blocks = end_block - start_block + 1
 
 exclude_list = [

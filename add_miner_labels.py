@@ -14,18 +14,21 @@ connection = psycopg2.connect(
 connection.autocommit = True
 cursor = connection.cursor()
 
-start_block = 12965000
-end_block = 14714999
+#start_block = 12965000
+#end_block = 14714999
 
-cursor.execute("ALTER TABLE miner_payments DROP COLUMN IF EXISTS miner_group")
-cursor.execute(
-    "ALTER TABLE miner_payments ADD COLUMN miner_group VARCHAR(256)"
-)
+start_block = 14715000
+end_block = 15449617
 
-cursor.execute("ALTER TABLE miner_payments DROP COLUMN IF EXISTS payer_group")
-cursor.execute(
-    "ALTER TABLE miner_payments ADD COLUMN payer_group VARCHAR(256)"
-)
+#cursor.execute("ALTER TABLE miner_payments DROP COLUMN IF EXISTS miner_group")
+#cursor.execute(
+#    "ALTER TABLE miner_payments ADD COLUMN miner_group VARCHAR(256)"
+#)
+
+#cursor.execute("ALTER TABLE miner_payments DROP COLUMN IF EXISTS payer_group")
+#cursor.execute(
+#    "ALTER TABLE miner_payments ADD COLUMN payer_group VARCHAR(256)"
+#)
 
 miner_lookup = {}
 with open("pool_addresses.csv") as f:
@@ -54,7 +57,7 @@ update_query = (
 miner_payer_count = 0
 start_time = time.time()
 last_update = 0
-for block_number in range(start_block, end_block+1):
+for block_number in range(start_block, end_block + 1):
     cursor.execute(
         f"SELECT transaction_hash, miner_address, transaction_from_address "
         f"FROM miner_payments WHERE block_number = {block_number}"
@@ -89,4 +92,4 @@ for block_number in range(start_block, end_block+1):
         print(f"{elapsed} / {perc:.2f}% complete", end='\r')
         last_update = t
 
-print(miner_payer_count)
+print()
